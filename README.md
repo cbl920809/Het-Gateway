@@ -1,6 +1,6 @@
 #Format Raspberry Pi SD card rapidly
 Format Tools  
-NOOBS (New Out Of Box Software) is an easy operating system install manager for the Raspberry Pi.
+NOOBS (New Out Of Box Software) is an easy operating system install manager for the Raspberry Pi.		
 # Het-Gateway
 Base on OM2M M2M Service Platform Het-Gateway
 
@@ -8,75 +8,75 @@ Base on OM2M M2M Service Platform Het-Gateway
 http://www.eclipse.org/om2m/
 
 #Bluetooth Setup
-Setup Bluetooth package and pair with another device.
-This steps try to connect a bluetooth device.
-$ sudo -s
-$ apt-get install bluez python-gobject
-$ hcitool dev
-$ hcitool scan
-$ echo 0000 | sudo bluez-simple-agent hci0 00:0F:F6:82:D1:BB
-$ sudo bluez-test-device trusted 00:0F:F6:82:D1:BB yes
-$ sudo bluez-test-input connect 00:0F:F6:82:D1:BB 
-$ hcitool con
+Setup Bluetooth package and pair with another device.  
+This steps try to connect a bluetooth device.  
+$ sudo -s  
+$ apt-get install bluez python-gobject  
+$ hcitool dev  
+$ hcitool scan  
+$ echo 0000 | sudo bluez-simple-agent hci0 00:0F:F6:82:D1:BB  
+$ sudo bluez-test-device trusted 00:0F:F6:82:D1:BB yes  
+$ sudo bluez-test-input connect 00:0F:F6:82:D1:BB   
+$ hcitool con  
 
-#R Pi Wifi Hotspot Setup
-1. Installed packages and its dependency 
-$ sudo apt-get install hostapd hostap-utils dnsmasq iw bridge-utils
-  hostapd: the hostap wireless access point daemon
-  hostap-utils: supplemental hostap tools
-  iw: wireless configuration utility
-  dnsmasq: DHCP and DNS utility
-  bridge-utils:  used for connecting multiple Ethernet devices together
-NOTE:
-  Run “sudo apt-get update” if some packages were Not Found.
+#R Pi Wifi Hotspot Setup  
+1. Installed packages and its dependency   
+$ sudo apt-get install hostapd hostap-utils dnsmasq iw bridge-utils  
+  hostapd: the hostap wireless access point daemon  
+  hostap-utils: supplemental hostap tools  
+  iw: wireless configuration utility  
+  dnsmasq: DHCP and DNS utility  
+  bridge-utils:  used for connecting multiple Ethernet devices together  
+NOTE:  
+  Run “sudo apt-get update” if some packages were Not Found.  
 
-2. Replace hostapd hostapd-cli (See Appendix E. Compile hostapd)
+2. Replace hostapd hostapd-cli (See Appendix E. Compile hostapd)  
 
-3. Change network setting at /etc/network/interfaces
-$ sudo vi /etc/network/interfaces
-auto lo
-iface lo inet loopback
+3. Change network setting at /etc/network/interfaces  
+$ sudo vi /etc/network/interfaces  
+auto lo  
+iface lo inet loopback  
 
-allow-hotplug eth0
-iface eth0 inet static
-address 140.114.XXX.YYY
-netmask 255.255.255.0
-gateway 140.114.XXX.254 
+allow-hotplug eth0  
+iface eth0 inet static  
+address 140.114.XXX.YYY  
+netmask 255.255.255.0  
+gateway 140.114.XXX.254   
 
-allow-hotplug wlan0
-iface wlan0 inet manual
+allow-hotplug wlan0  
+iface wlan0 inet manual  
 
-4. Create hostapd.conf
-See: http://w1.fi/cgit/hostap/plain/hostapd/hostapd.conf
-$ sudo vi /etc/hostapd/hostapd.conf
+4. Create hostapd.conf  
+See: http://w1.fi/cgit/hostap/plain/hostapd/hostapd.conf  
+$ sudo vi /etc/hostapd/hostapd.conf  
 
-interface=wlan0
-bridge=br0
-driver=rtl871xdrv
-ctrl_interface=/var/run/hostapd
+interface=wlan0  
+bridge=br0  
+driver=rtl871xdrv  
+ctrl_interface=/var/run/hostapd  
 
-ssid=RaspGW
-country_code=TW
-hw_mode=g
-channel=6
-beacon_int=100
-dtim_period=2
-auth_algs=1
-ignore_broadcast_ssid=0
+ssid=RaspGW  
+country_code=TW  
+hw_mode=g  
+channel=6  
+beacon_int=100  
+dtim_period=2  
+auth_algs=1  
+ignore_broadcast_ssid=0  
 
-ieee80211n=1
-wmm_enabled=1
-ht_capab=[HT40+][SHORT-GI-40][DSSS_CCK-40]
+ieee80211n=1  
+wmm_enabled=1  
+ht_capab=[HT40+][SHORT-GI-40][DSSS_CCK-40]  
 
-wpa=2
-wpa_passphrase=mtc5g34182
-wpa_key_mgmt=WPA-PSK
-wpa_pairwise=TKIP
-rsn_pairwise=CCMP
+wpa=2  
+wpa_passphrase=mtc5g34182  
+wpa_key_mgmt=WPA-PSK  
+wpa_pairwise=TKIP  
+rsn_pairwise=CCMP  
 
-$ sudo vi /etc/default/hostapd
-Find the line #DAEMON_CONF="" and edit it so it says
-DAEMON_CONF="/etc/hostapd/hostapd.conf"
+$ sudo vi /etc/default/hostapd  
+Find the line #DAEMON_CONF="" and edit it so it says  
+DAEMON_CONF="/etc/hostapd/hostapd.conf"  
 
 5. Uncomment the following lines in /etc/dnsmasq.conf and adjust them to your environment:
 domain-needed
