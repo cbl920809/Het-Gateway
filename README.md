@@ -8,24 +8,24 @@ http://www.eclipse.org/om2m/
 Setup Bluetooth package and pair with another device.
 This steps try to connect a bluetooth device.
 $ sudo -s
-# apt-get install bluez python-gobject
-# hcitool dev
-# hcitool scan
-# echo 0000 | sudo bluez-simple-agent hci0 00:0F:F6:82:D1:BB
-# sudo bluez-test-device trusted 00:0F:F6:82:D1:BB yes
-# sudo bluez-test-input connect 00:0F:F6:82:D1:BB 
-# hcitool con
+$ apt-get install bluez python-gobject
+$ hcitool dev
+$ hcitool scan
+$ echo 0000 | sudo bluez-simple-agent hci0 00:0F:F6:82:D1:BB
+$ sudo bluez-test-device trusted 00:0F:F6:82:D1:BB yes
+$ sudo bluez-test-input connect 00:0F:F6:82:D1:BB 
+$ hcitool con
 
 #R Pi Wifi Hotspot Setup
 1. Installed packages and its dependency 
 $ sudo apt-get install hostapd hostap-utils dnsmasq iw bridge-utils
-¡ñ	hostapd: the hostap wireless access point daemon
-¡ñ	hostap-utils: supplemental hostap tools
-¡ñ	iw: wireless configuration utility
-¡ñ	dnsmasq: DHCP and DNS utility
-¡ñ	bridge-utils:  used for connecting multiple Ethernet devices together
+  hostapd: the hostap wireless access point daemon
+  hostap-utils: supplemental hostap tools
+  iw: wireless configuration utility
+  dnsmasq: DHCP and DNS utility
+  bridge-utils:  used for connecting multiple Ethernet devices together
 NOTE:
-	Run “sudo apt-get update” if some packages were Not Found.
+  Run “sudo apt-get update” if some packages were Not Found.
 
 2. Replace hostapd hostapd-cli (See Appendix E. Compile hostapd)
 
@@ -91,37 +91,37 @@ $ sudo /etc/init.d/dnsmasq restart
 
 7. Default enable ipv4 forwarding
 $ sudo vi /etc/sysctl.conf
-#uncomment :
+$ uncomment :
 net.ipv4.ip_forward=1
 
 8. ssh tunnel setting
-$ssh -NfR 8181:127.0.0.1:8181 ubuntu@140.114.91.204
-$sudo vi /etc/ssh/ssh_config
+$ ssh -NfR 8181:127.0.0.1:8181 ubuntu@140.114.91.204
+$ sudo vi /etc/ssh/ssh_config
 ServerAliveInterval 60
-$sudo service ssh restart
+$ sudo service ssh restart
 
 9. Change hostname
-$hostname RaspGW2
-$sudo vi /etc/hosts
-		#127.0.1.1  	raspberrypi
-127.0.1.1   	RaspGW2
+$ hostname RaspGW2
+$ sudo vi /etc/hosts
+$ 127.0.1.1  	raspberrypi
+$ 127.0.1.1   	RaspGW2
 
 10. Prevent slow login
 $sudo vi /etc/ssh/sshd_config
-		#disable DNS lookup when login
-		UseDNS no
+     $ disable DNS lookup when login
+	UseDNS no
 $sudo service ssh restart
 
 11. Auto start hostapd
-	$vi /etc/rc.local
-#if use openvswitch
+$vi /etc/rc.local
+$if use openvswitch
 hostname RaspGW1
 ifconfig br0 192.168.3.1 netmask 255.255.255.0
 /etc/init.d/hostapd restart
 /etc/init.d/dnsmasq restart
 iptables -t nat -A POSTROUTING -s 192.168.3.0/24 -j MASQUERADE
 
-		#if use linux bridge
+$if use linux bridge
 hostname Rasp2GW1
 brctl addbr br0
 ifconfig br0 192.168.3.1 netmask 255.255.255.0
